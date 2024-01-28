@@ -10,6 +10,18 @@
 #include <stdbool.h>
 
 
+typedef struct my_struct{
+    int num;
+    int num2;
+}test_struct;
+
+test_struct return_struct(test_struct* Test_data);
+
+test_struct return_struct(struct my_struct* Test_data){
+    return *Test_data;
+}
+
+
 void main(){
 
 uint8_t print_buffer[64] = {0};
@@ -44,7 +56,7 @@ extern struct chan_mods channels;
 // init_channel_mods(channels);
 
 printf("chan 1 is %d\n", channels.chan1_mod);
-set_chan_divisions(1, 1, &channels);
+set_chan_divisions(1, 5, &channels);
 printf("chan 1 is %d\n", channels.chan1_mod);
 
 
@@ -61,7 +73,9 @@ for(uint16_t i; i<20; i++){
 
 int myvar = 1;
 
+test_struct t1 = {3, 5};
 
+printf(" here is a return struct %d",return_struct(&t1).num2);
 
 
 

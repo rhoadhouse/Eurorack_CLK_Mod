@@ -23,13 +23,24 @@ uint8_t modifiy_port_data(uint8_t data, uint8_t chan, uint8_t mod, uint8_t count
 }
 
 
+/*Trying something out, where I store a pointer to the structure that i am trying to edit inside of a function then return that value anytime i want to access that struct.*/
+bool get_struct_entry = 0;
+// chan_mods initial_channel_struct = {1,2,3,4,5,6,7,8};
+chan_mods *clk_mod_channels_ptr;
+chan_mods get_chan_structure(){
+//     if(get_struct_entry == 0){
+//         chan_mods clk_mod_channels = ;
+//         clk_mod_channels_ptr = &clk_mod_channels;
+//         get_struct_entry = 1;
+//         //we run this functino once to initialize the structure and then return the pointer address to it.
+//         //Each consecutive call should only return the ptr address and no longer init the struct
+//     }
+    return *clk_mod_channels_ptr;
+}
 
-
-
-
-
+ 
 //setting up a structure in order to store the different mod settings for each channel
-chan_mods channels = {1,2,3,4,5,6,7,8}; //initialize the struct for channels
+// chan_mods channels = {1,2,3,4,5,6,7,8}; //initialize the struct for channels
 
 //function for changing the modifier value for a channel
 void set_chan_divisions(int chan, int mod, chan_mods *channels){
@@ -63,7 +74,7 @@ void set_chan_divisions(int chan, int mod, chan_mods *channels){
    }
 }
 
-
+chan_mods channels = {1,2,3,4,5,6,7,8};
 // void init_channel_mods(chan_mods* channels){
 // channels -> chan1_mod = 1;
 // channels -> chan2_mod = 2;
