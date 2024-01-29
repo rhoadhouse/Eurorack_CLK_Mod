@@ -145,7 +145,7 @@ void execute_encoder_functions(){
             encoder_counter--;        
             write_func_global(encoder_counter);
         }
-        // write_func_global(encoder_counter);
+        
     
         PCIFR |= 0b00000100;
         previous_state = read_port(3)&0b11000000;
@@ -177,7 +177,7 @@ void dio_setup(){
 }
 
 void interrupt_setup(){
-    //This sets up the interrupts
+    //This sets up the interrupts.  INT0 is used for the TEmpo input
 
     EICRA = 2; //External Interrupt Control Register A.  This is used to set the how the external interrupt (INT0 and INT1) is triggered (falling edge, rising edge, or low level)
                //setting to 2 configures INT0 to be triggered on a falling edge
