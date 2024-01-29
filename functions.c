@@ -25,17 +25,14 @@ uint8_t modifiy_port_data(uint8_t data, uint8_t chan, uint8_t mod, uint8_t count
 
 /*Trying something out, where I store a pointer to the structure that i am trying to edit inside of a function then return that value anytime i want to access that struct.*/
 bool get_struct_entry = 0;
-// chan_mods initial_channel_struct = {1,2,3,4,5,6,7,8};
-chan_mods *clk_mod_channels_ptr;
-chan_mods get_chan_structure(){
-//     if(get_struct_entry == 0){
-//         chan_mods clk_mod_channels = ;
-//         clk_mod_channels_ptr = &clk_mod_channels;
-//         get_struct_entry = 1;
-//         //we run this functino once to initialize the structure and then return the pointer address to it.
-//         //Each consecutive call should only return the ptr address and no longer init the struct
-//     }
-    return *clk_mod_channels_ptr;
+chan_mods initial_channel_struct = {1,2,3,4,5,6,7,8};
+chan_mods *clk_mod_channels_ptr = &initial_channel_struct;
+chan_mods *get_chan_structure(){
+    if(get_struct_entry == 0){
+        get_struct_entry = 1;
+        printf("first run of this function");//this bit of code is here in case we wnat to run anything on initialization of this function
+    }
+    return clk_mod_channels_ptr; 
 }
 
  
@@ -43,38 +40,38 @@ chan_mods get_chan_structure(){
 // chan_mods channels = {1,2,3,4,5,6,7,8}; //initialize the struct for channels
 
 //function for changing the modifier value for a channel
-void set_chan_divisions(int chan, int mod, chan_mods *channels){
+void set_chan_divisions(int chan, int mod){
     if(chan <=8){
         switch(chan){
             case 1:
-                channels -> chan1_mod = mod;
+                get_chan_structure() -> chan1_mod = mod;
                 break;
             case 2:
-                channels -> chan2_mod = mod;
+                get_chan_structure() -> chan2_mod = mod;
                 break;
             case 3:
-                channels -> chan3_mod = mod;
+                get_chan_structure() -> chan3_mod = mod;
                 break;
             case 4:
-                channels -> chan4_mod = mod;
+                get_chan_structure() -> chan4_mod = mod;
                 break;
             case 5:
-                channels -> chan5_mod = mod;
+                get_chan_structure() -> chan5_mod = mod;
                 break;
             case 6:
-                channels -> chan6_mod = mod;
+                get_chan_structure() -> chan6_mod = mod;
                 break;
             case 7:
-                channels -> chan7_mod = mod;
+                get_chan_structure() -> chan7_mod = mod;
                 break;
             case 8:
-                channels -> chan8_mod = mod;
+                get_chan_structure() -> chan8_mod = mod;
                 break;
         }
    }
 }
 
-chan_mods channels = {1,2,3,4,5,6,7,8};
+// chan_mods channels = {1,2,3,4,5,6,7,8};
 // void init_channel_mods(chan_mods* channels){
 // channels -> chan1_mod = 1;
 // channels -> chan2_mod = 2;
@@ -87,8 +84,21 @@ chan_mods channels = {1,2,3,4,5,6,7,8};
 
 // }
 
+void print_all_channels(){
+printf("printing all channels...\n");
+printf("chan 1 is %d\n", get_chan_structure() -> chan1_mod);
+printf("chan 2 is %d\n", get_chan_structure() -> chan2_mod);
+printf("chan 3 is %d\n", get_chan_structure() -> chan3_mod);
+printf("chan 4 is %d\n", get_chan_structure() -> chan4_mod);
+printf("chan 5 is %d\n", get_chan_structure() -> chan5_mod);
+printf("chan 6 is %d\n", get_chan_structure() -> chan6_mod);
+printf("chan 7 is %d\n", get_chan_structure() -> chan7_mod);
+printf("chan 8 is %d\n", get_chan_structure() -> chan8_mod);
 
-uint8_t clk_engine(chan_mods *channels){
+}
+
+
+uint8_t clk_engine(){
     //this function is supposed to emulate a clk divider and muiltiplier
     
     //this is the "main clk" of the clk mod function.
@@ -98,15 +108,17 @@ uint8_t clk_engine(chan_mods *channels){
          counter ++;
     }
 
+    // print_all_channels();
+
     //Here is where we apply the mod to each channel
-    current_port_data = modifiy_port_data(current_port_data, 1, (channels -> chan1_mod), counter);
-    current_port_data = modifiy_port_data(current_port_data, 2, (channels -> chan2_mod), counter);
-    current_port_data = modifiy_port_data(current_port_data, 3, (channels -> chan3_mod), counter);
-    current_port_data = modifiy_port_data(current_port_data, 4, (channels -> chan4_mod), counter);
-    current_port_data = modifiy_port_data(current_port_data, 5, (channels -> chan5_mod), counter);
-    current_port_data = modifiy_port_data(current_port_data, 6, (channels -> chan6_mod), counter);
-    current_port_data = modifiy_port_data(current_port_data, 7, (channels -> chan7_mod), counter);
-    current_port_data = modifiy_port_data(current_port_data, 8, (channels -> chan8_mod), counter);
+    current_port_data = modifiy_port_data(current_port_data, 1, (get_chan_structure() -> chan1_mod), counter);
+    current_port_data = modifiy_port_data(current_port_data, 2, (get_chan_structure() -> chan2_mod), counter);
+    current_port_data = modifiy_port_data(current_port_data, 3, (get_chan_structure() -> chan3_mod), counter);
+    current_port_data = modifiy_port_data(current_port_data, 4, (get_chan_structure() -> chan4_mod), counter);
+    current_port_data = modifiy_port_data(current_port_data, 5, (get_chan_structure() -> chan5_mod), counter);
+    current_port_data = modifiy_port_data(current_port_data, 6, (get_chan_structure() -> chan6_mod), counter);
+    current_port_data = modifiy_port_data(current_port_data, 7, (get_chan_structure() -> chan7_mod), counter);
+    current_port_data = modifiy_port_data(current_port_data, 8, (get_chan_structure() -> chan8_mod), counter);
 
     
 

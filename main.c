@@ -51,18 +51,19 @@ int main()
             write_data_ptr = &data_to_write;
             memset(print_buffer, 0, sizeof(print_buffer));
             
-            if(loop_counter == 1000){
+            if(loop_counter == 1000){//only output data on uart every 1000 cycles
 
-            sprintf((char*)print_buffer, "ADC read is: %0.2f volts, Counter is: %s\r", volts, num_to_binary_string(*write_data_ptr));
-            // sprintf((char*)print_buffer, "%d\n\r", read_port);
+                sprintf((char*)print_buffer, "ADC read is: %0.2f volts, Counter is: %s\r", volts, num_to_binary_string(*write_data_ptr));
+                // sprintf((char*)print_buffer, "%d\n\r", read_port);
+                
+                uart_send_string(print_buffer);
+                loop_counter = 0;
+            }
+
             
-            uart_send_string(print_buffer);
-            loop_counter =0;
-            }
-
-            if(read_encoder_trig_func_global() == 1){
-                execute_encoder_functions();
-            }
+            execute_encoder_functions();
+            set_chan_divisions(1, read_func_global());
+            
             
             // vc_delay(1000/((volts*100)+1));        
             loop_counter++;

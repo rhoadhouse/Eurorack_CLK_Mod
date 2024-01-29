@@ -15,10 +15,11 @@ typedef struct my_struct{
     int num2;
 }test_struct;
 
-test_struct return_struct(test_struct* Test_data);
+test_struct return_struct();
+test_struct test_data = {1,2};
 
-test_struct return_struct(struct my_struct* Test_data){
-    return *Test_data;
+test_struct return_struct(){
+    test_data.num = 5;
 }
 
 
@@ -55,13 +56,21 @@ extern struct chan_mods channels;
 // channels.chan8_mod = 8;
 // init_channel_mods(channels);
 
-printf("chan 1 is %d\n", channels.chan1_mod);
-set_chan_divisions(1, 5, &channels);
-printf("chan 1 is %d\n", channels.chan1_mod);
+print_all_channels();
+printf("setting chan divisions...\n");
+set_chan_divisions(1, 8);
+set_chan_divisions(2, 7);
+set_chan_divisions(3, 6);
+set_chan_divisions(4, 5);
+set_chan_divisions(5, 4);
+set_chan_divisions(6, 3);
+set_chan_divisions(7, 2);
+set_chan_divisions(8, 1);
 
+print_all_channels();
 
 for(uint16_t i; i<20; i++){
-    printf(num_to_binary_string(clk_engine(&channels)));
+    printf(num_to_binary_string(clk_engine()));
     
 }
 
@@ -74,9 +83,11 @@ for(uint16_t i; i<20; i++){
 int myvar = 1;
 
 test_struct t1 = {3, 5};
-
-printf(" here is a return struct %d",return_struct(&t1).num2);
-
+printf("num1 is %d\n", test_data.num);
+printf("num2 is %d\n", test_data.num2);
+return_struct();
+printf("num1 is %d\n", test_data.num);
+printf("num2 is %d\n", test_data.num2);
 
 
 }

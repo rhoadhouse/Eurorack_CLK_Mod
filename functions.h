@@ -19,7 +19,8 @@ typedef struct chan_mods{
     uint8_t chan8_mod;
 }chan_mods;
 
-chan_mods get_chan_structure();
+chan_mods *get_chan_structure();
+void print_all_channels();
 
 void vc_delay(uint16_t time);
 uint8_t modifiy_port_data(uint8_t data, uint8_t chan, uint8_t mod, uint8_t count);
@@ -42,7 +43,7 @@ Need to think of a way that we can store the desired clk mod with each channel
 
 
 
-void set_chan_divisions(int chan, int mod, chan_mods *channels);
+void set_chan_divisions(int chan, int mod);
 
 
 uint8_t read_func_global();

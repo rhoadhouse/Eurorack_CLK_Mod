@@ -130,25 +130,27 @@ uint8_t encoder_counter = 0;
 uint8_t previous_state = 0;
 uint8_t current_state = 0;
 void execute_encoder_functions(){
-        current_state = read_port(3)&0b11000000;
-        write_port(1, 0b00001111);
-    if(current_state == 0 && previous_state == 0b01000000){
-        _delay_ms(1);  
-        encoder_counter++;        
-        write_func_global(encoder_counter);
-    }
+    if(read_encoder_trig_func_global() == 1){
+            current_state = read_port(3)&0b11000000;
+            write_port(1, 0b00001111);
+        if(current_state == 0 && previous_state == 0b01000000){
+            _delay_ms(1);  
+            encoder_counter++;        
+            write_func_global(encoder_counter);
+        }
+        
+        else if (current_state == 0 && previous_state == 0b10000000)
+        {
+            _delay_ms(5);   
+            encoder_counter--;        
+            write_func_global(encoder_counter);
+        }
+        // write_func_global(encoder_counter);
     
-    else if (current_state == 0 && previous_state == 0b10000000)
-    {
-        _delay_ms(5);   
-        encoder_counter--;        
-        write_func_global(encoder_counter);
+        PCIFR |= 0b00000100;
+        previous_state = read_port(3)&0b11000000;
+        write_encoder_trig_func_global(0);  //write a zero to the encoder triggered storing function to indicate that we have finished with the encoder duties
     }
-    // write_func_global(encoder_counter);
-    
-    PCIFR |= 0b00000100;
-    previous_state = read_port(3)&0b11000000;
-    write_encoder_trig_func_global(0);  //write a zero to the encoder triggered storing function to indicate that we have finished with the encoder duties
 }
 
 /**************
