@@ -5,6 +5,15 @@ Eurorack CLk Mod Pinout for Atmel 328p
 - Chan4 output -> PortB P3
 
 - Clk Tempo In -> PortD P2
+- shift button -> PortD P3
 - Encoder increment -> PortD P6
 - Encoder decrement -> PortD P7
+- Button1 -> portD P0
+- Button2 -> portD P1
+- Button3 -> portD P5
+- Button4 -> portD P6
 
+- CV1 -> portC P0
+- CV2 -> portC P1
+- CV3 -> portC P2
+- CV4 -> portC P3

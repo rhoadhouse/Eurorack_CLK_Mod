@@ -7,39 +7,39 @@
 #include <stdbool.h>
 
 
-
-uint8_t current_port_data = 0;
-uint8_t counter = 0;
-uint8_t *cpd_ptr = &current_port_data; //cpd_ptr stands for Current Port Data Pointer
-bool divider_clk = 0;
-
-uint8_t modifiy_port_data(uint8_t data, uint8_t chan, uint8_t mod, uint8_t count){
-    //divides the counter by the specified divisor and if the remainder is zero then applies an exclusive OR mask to flp the bit.
-    //returns the byte after applying the appropriate masks
-        if (count%mod == 0){
-        data ^= (1 << (chan-1));
-    }
-    return data;
-}
+/*
+ * *********************************************************************************
+ * 
+ * 
+ * This section contains the data structure that is used to store each channels parameters
+ * and the functions that are used to edit these params directly
+ * 
+ * 
+ * *********************************************************************************
+ * /
 
 
 /*Trying something out, where I store a pointer to the structure that i am trying to edit inside of a function then return that value anytime i want to access that struct.*/
 bool get_struct_entry = 0;
-chan_mods initial_channel_struct = {1,2,3,4,5,6,7,8};
+chan_mods initial_channel_struct = {1,2,3,4,5,6,7,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 chan_mods *clk_mod_channels_ptr = &initial_channel_struct;
+
 chan_mods *get_chan_structure(){
     if(get_struct_entry == 0){
         get_struct_entry = 1;
-        printf("first run of this function");//this bit of code is here in case we wnat to run anything on initialization of this function
+        printf("first run of the 'get_chan_structure' function\n");//this bit of code is here in case we wnat to run anything on initialization of this function
     }
     return clk_mod_channels_ptr; 
 }
 
- 
-//setting up a structure in order to store the different mod settings for each channel
-// chan_mods channels = {1,2,3,4,5,6,7,8}; //initialize the struct for channels
 
-//function for changing the modifier value for a channel
+
+
+/****
+ * 
+ * function for changing the modifier value for a channel
+ * 
+ * */
 void set_chan_divisions(int chan, int mod){
     if(chan <=8){
         switch(chan){
@@ -71,6 +71,112 @@ void set_chan_divisions(int chan, int mod){
    }
 }
 
+/****
+ * 
+ * function for changing the phase value for a channel
+ * 
+ * */
+void set_chan_phase(int chan, int phase){
+    if(chan <=8){
+        switch(chan){
+            case 1:
+                get_chan_structure() -> chan1_phase = phase;
+                break;
+            case 2:
+                get_chan_structure() -> chan2_phase = phase;
+                break;
+            case 3:
+                get_chan_structure() -> chan3_phase = phase;
+                break;
+            case 4:
+                get_chan_structure() -> chan4_phase = phase;
+                break;
+            case 5:
+                get_chan_structure() -> chan5_phase = phase;
+                break;
+            case 6:
+                get_chan_structure() -> chan6_phase = phase;
+                break;
+            case 7:
+                get_chan_structure() -> chan7_phase = phase;
+                break;
+            case 8:
+                get_chan_structure() -> chan8_phase = phase;
+                break;
+        }
+   }
+}
+
+
+/****
+ * 
+ * function for changing the pulse width value for a channel
+ * 
+ * */
+void set_chan_pw(int chan, int pw){
+    if(chan <=8){
+        switch(chan){
+            case 1:
+                get_chan_structure() -> chan1_pw = pw;
+                break;
+            case 2:
+                get_chan_structure() -> chan2_pw = pw;
+                break;
+            case 3:
+                get_chan_structure() -> chan3_pw = pw;
+                break;
+            case 4:
+                get_chan_structure() -> chan4_pw = pw;
+                break;
+            case 5:
+                get_chan_structure() -> chan5_pw = pw;
+                break;
+            case 6:
+                get_chan_structure() -> chan6_pw = pw;
+                break;
+            case 7:
+                get_chan_structure() -> chan7_pw = pw;
+                break;
+            case 8:
+                get_chan_structure() -> chan8_pw = pw;
+                break;
+        }
+   }
+}
+
+
+
+
+
+
+/***********************************
+ * 
+ * CLK Mod functions
+ * 
+ * 
+ * 
+ * The following contains the functions for modifiying the params for each channels clk signal
+ * 
+ * *********************************/
+
+
+
+
+
+uint8_t modifiy_port_data(uint8_t data, uint8_t chan, uint8_t mod, uint8_t count){
+    //divides the counter by the specified divisor and if the remainder is zero then applies an exclusive OR mask to flp the bit.
+    //returns the byte after applying the appropriate masks
+        if (count%mod == 0){
+        data ^= (1 << (chan-1));
+    }
+    return data;
+}
+
+
+
+ 
+
+
 // chan_mods channels = {1,2,3,4,5,6,7,8};
 // void init_channel_mods(chan_mods* channels){
 // channels -> chan1_mod = 1;
@@ -84,6 +190,9 @@ void set_chan_divisions(int chan, int mod){
 
 // }
 
+
+
+//debug function for printing each of the channels current clk mod value.  cleaner insead of calling each of these during the test routine
 void print_all_channels(){
 printf("printing all channels...\n");
 printf("chan 1 is %d\n", get_chan_structure() -> chan1_mod);
@@ -97,6 +206,11 @@ printf("chan 8 is %d\n", get_chan_structure() -> chan8_mod);
 
 }
 
+
+uint8_t current_port_data = 0;  //variable that is used to store the data that we will send to the port that we are writing too
+uint8_t counter = 0;
+uint8_t *cpd_ptr = &current_port_data; //cpd_ptr stands for Current Port Data Pointer.  We use this pointer to 
+bool divider_clk = 0;
 
 uint8_t clk_engine(){
     //this function is supposed to emulate a clk divider and muiltiplier
@@ -151,8 +265,7 @@ char *num_to_binary_string(uint8_t num){
  * *****************/
 uint8_t stored_data = 0;
 uint8_t func_global(uint8_t action, uint8_t data_to_store){
-    switch (action)
-    {
+    switch (action){
     case 0 :
         stored_data = data_to_store;
         return stored_data;

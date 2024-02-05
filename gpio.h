@@ -17,6 +17,8 @@ void timer_setup();
 uint8_t encoder_trig_func_global(uint8_t action, uint8_t data_to_store);
 void write_encoder_trig_func_global(uint8_t data);
 uint8_t read_encoder_trig_func_global();
+void write_encoder_data_func_global(uint8_t data);
+uint8_t read_encoder_data_func_global();
 void execute_encoder_functions();
 
 #define ADC_CONVERT_VOLTS(x) (x*(5.0/1024.0))

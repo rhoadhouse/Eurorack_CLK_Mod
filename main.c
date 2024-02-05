@@ -16,6 +16,16 @@
 
 int main()
 {
+/*********************************************
+*
+*
+* This is the setup code
+*
+*
+*
+***********************************************/
+
+
     // Initialize ports, ADC, UART, interrupts, etc
     uint8_t start[] = "Program Start\n\r";
     uint8_t print_buffer[64] = {0}; //establish the buffer that will hold our data to print
@@ -38,6 +48,16 @@ int main()
     uint8_t * encoder_interrupt_triggered_ptr;
     uint16_t loop_counter = 0;
 
+
+
+/*********************************************
+*
+*
+* This is the primary super loop for the code
+*
+*
+*
+***********************************************/
     while (1) {
         //if(uart_read_count() > 0){
 
@@ -62,12 +82,15 @@ int main()
 
             
             execute_encoder_functions();
-            set_chan_divisions(1, read_func_global());
+            set_chan_divisions(1, read_encoder_data_func_global());
             
             
             // vc_delay(1000/((volts*100)+1));        
             loop_counter++;
-        }
+            
+        }//end of the super loop
+
+
     return 0;
     
 }

@@ -17,6 +17,24 @@ typedef struct chan_mods{
     uint8_t chan6_mod;
     uint8_t chan7_mod;
     uint8_t chan8_mod;
+    uint8_t chan1_phase;
+    uint8_t chan2_phase;
+    uint8_t chan3_phase;
+    uint8_t chan4_phase;
+    uint8_t chan5_phase;
+    uint8_t chan6_phase;
+    uint8_t chan7_phase;
+    uint8_t chan8_phase;
+    uint8_t chan1_pw;
+    uint8_t chan2_pw;
+    uint8_t chan3_pw;
+    uint8_t chan4_pw;
+    uint8_t chan5_pw;
+    uint8_t chan6_pw;
+    uint8_t chan7_pw;
+    uint8_t chan8_pw;
+    
+    
 }chan_mods;
 
 chan_mods *get_chan_structure();
@@ -44,6 +62,8 @@ Need to think of a way that we can store the desired clk mod with each channel
 
 
 void set_chan_divisions(int chan, int mod);
+void set_chan_phase(int chan, int phase);
+void set_chan_pw(int chan, int pw);
 
 
 uint8_t read_func_global();

@@ -124,6 +124,15 @@ uint8_t read_encoder_trig_func_global(){
     return encoder_trig_func_global(1, 0);
 }
 
+void write_encoder_data_func_global(uint8_t data){
+    encoder_trig_func_global(0, data);
+}
+
+//we use this funciton to read the value of the encoder triggered function
+uint8_t read_encoder_data_func_global(){
+    return encoder_trig_func_global(1, 0);
+}
+
 
 //This is where we handle the functions for executing the encoder increment and decrement funcitons
 uint8_t encoder_counter = 0;
@@ -136,14 +145,14 @@ void execute_encoder_functions(){
         if(current_state == 0 && previous_state == 0b01000000){
             _delay_ms(1);  
             encoder_counter++;        
-            write_func_global(encoder_counter);
+            write_encoder_data_func_global(encoder_counter);
         }
         
         else if (current_state == 0 && previous_state == 0b10000000)
         {
             _delay_ms(5);   
             encoder_counter--;        
-            write_func_global(encoder_counter);
+            write_encoder_data_func_global(encoder_counter);
         }
         
     
