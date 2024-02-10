@@ -23,6 +23,19 @@ test_struct return_struct(){
 }
 
 
+bool selected_chans_array[8];
+
+void set_selected_chans(uint8_t chans);
+void set_selected_chans(uint8_t chans){
+    printf("assigning selected chann\n");
+    for(uint8_t i = 0; i < 8; i++){
+        uint8_t val = (1<<i);
+        val = (val & chans);
+        selected_chans_array[i] = val>>i;
+        printf("%d, %d\n", selected_chans_array[i],i);
+    }
+}
+
 void main(){
 
 uint8_t print_buffer[64] = {0};
@@ -56,20 +69,23 @@ extern struct chan_mods channels;
 // channels.chan8_mod = 8;
 // init_channel_mods(channels);
 
-print_all_channels();
-printf("setting chan divisions...\n");
-set_chan_divisions(1, 8);
-set_chan_divisions(2, 7);
-set_chan_divisions(3, 6);
-set_chan_divisions(4, 5);
-set_chan_divisions(5, 4);
-set_chan_divisions(6, 3);
-set_chan_divisions(7, 2);
-set_chan_divisions(8, 1);
+
+printf("Stuff");
+
+// print_all_channels();
+// printf("setting chan divisions...\n");
+// set_chan_divisions(1, 8);
+// set_chan_divisions(2, 7);
+// set_chan_divisions(3, 6);
+// set_chan_divisions(4, 5);
+// set_chan_divisions(5, 4);
+// set_chan_divisions(6, 3);
+// set_chan_divisions(7, 2);
+// set_chan_divisions(8, 1);
 
 print_all_channels();
 
-for(uint16_t i; i<20; i++){
+for(uint16_t i; i<700; i++){
     printf(num_to_binary_string(clk_engine()));
     
 }
@@ -78,6 +94,12 @@ for(uint16_t i; i<20; i++){
 
 // printf("chan 1 %d, chan 2 %d, chan 3 %d, chan 4 %d, chan 5 %d, chan 6 %d \n", channels.chan1_mod, channels.chan2_mod, channels.chan3_mod, channels.chan4_mod, channels.chan5_mod, channels.chan6_mod);
 
+
+uint8_t some_value = 56;
+
+
+
+set_selected_chans(some_value);
 
 
 int myvar = 1;
@@ -88,6 +110,14 @@ printf("num2 is %d\n", test_data.num2);
 return_struct();
 printf("num1 is %d\n", test_data.num);
 printf("num2 is %d\n", test_data.num2);
+
+
+uint8_t yarp = 1;
+
+printf("%d\n", yarp);
+yarp = yarp << 0;
+printf("%d\n", yarp);
+
 
 
 }

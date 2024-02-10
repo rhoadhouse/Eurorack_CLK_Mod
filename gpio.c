@@ -102,7 +102,7 @@ uint8_t encoder_trig_func_global(uint8_t action, uint8_t data_to_store){
     
     switch (action)
     {
-    case 0 :
+    case 0:
         encoder_stored_trig = data_to_store;
         return encoder_stored_trig;
     
@@ -124,13 +124,31 @@ uint8_t read_encoder_trig_func_global(){
     return encoder_trig_func_global(1, 0);
 }
 
+uint8_t encoder_stored_value = 0;
+uint8_t encoder_data_func_global(uint8_t action, uint8_t data_to_store){
+    
+    switch (action)
+    {
+    case 0:
+        encoder_stored_value = data_to_store;
+        return encoder_stored_value;
+    
+    case 1:
+    return encoder_stored_value;
+
+    default:
+        return 0;
+    }
+}
+
+
 void write_encoder_data_func_global(uint8_t data){
-    encoder_trig_func_global(0, data);
+    encoder_data_func_global(0, data);
 }
 
 //we use this funciton to read the value of the encoder triggered function
 uint8_t read_encoder_data_func_global(){
-    return encoder_trig_func_global(1, 0);
+    return encoder_data_func_global(1, 0);
 }
 
 
@@ -162,9 +180,12 @@ void execute_encoder_functions(){
     }
 }
 
-/**************
- This is where we setup the subroutine that will run when the interupt for when the ADC conversion complete is triggered
-****************/ 
+/********************
+* 
+* Setup and Initialization Routines
+* 
+* 
+**********************/ 
 volatile static uint8_t adc_convert_done = 1;
 ISR(ADC_vect){
     adc_convert_done = 1;
@@ -202,7 +223,7 @@ void interrupt_setup(){
 
 /*******************************************
  * 
- * DIO
+ * DIO Funcitons
  * 
  * 
  * *****************************************/

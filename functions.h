@@ -66,8 +66,5 @@ void set_chan_phase(int chan, int phase);
 void set_chan_pw(int chan, int pw);
 
 
-uint8_t read_func_global();
-void write_func_global(uint8_t data);
-
 
 #endif

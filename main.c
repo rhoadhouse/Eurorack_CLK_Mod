@@ -2,6 +2,7 @@
 #include <util/delay.h>
 #include "gpio.h"
 #include "functions.h"
+#include "user_buttons.h"
 #include <avr/interrupt.h>
 #include <string.h>
 #include <stdio.h>
@@ -67,7 +68,7 @@ int main()
             // data_to_write = divider(0);
             // write_data_ptr = &data_to_write;
 
-            data_to_write = read_func_global();
+            data_to_write = read_encoder_data_func_global();
             write_data_ptr = &data_to_write;
             memset(print_buffer, 0, sizeof(print_buffer));
             
@@ -82,7 +83,7 @@ int main()
 
             
             execute_encoder_functions();
-            set_chan_divisions(1, read_encoder_data_func_global());
+            update_selected_channels(0, read_encoder_data_func_global());
             
             
             // vc_delay(1000/((volts*100)+1));        
