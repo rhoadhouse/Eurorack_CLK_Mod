@@ -41,15 +41,16 @@ void update_selected_channels(uint8_t param_to_update, uint8_t update_value){
     case 0:
     set_selected_chans(get_active_channel_buttons());
     for(uint8_t i; i<8; i++){
+        if(selected_chans_array[i] == 1){
             set_chan_divisions((i+1), update_value);
-        
+        }
     }
     
     case 1:
     set_selected_chans(get_active_channel_buttons());
     for(uint8_t i; i<8; i++){
         if(selected_chans_array[i] == 1) {
-            ((i+1),update_value);
+            set_chan_phase((i+1),update_value);
         }
     }
 

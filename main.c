@@ -82,8 +82,8 @@ int main()
             }
 
             
-            execute_encoder_functions();
-            update_selected_channels(0, read_encoder_data_func_global());
+            execute_encoder_functions();//if encoder interrupt has been triggered it will set a flag to let this function operate
+            update_selected_channels(0, read_encoder_data_func_global()); //updates the channels based on the value at the encoder
             
             
             // vc_delay(1000/((volts*100)+1));        

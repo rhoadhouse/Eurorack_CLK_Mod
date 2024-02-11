@@ -85,7 +85,7 @@ printf("Stuff");
 
 print_all_channels();
 
-for(uint16_t i; i<700; i++){
+for(uint16_t i; i<20; i++){
     printf(num_to_binary_string(clk_engine()));
     
 }

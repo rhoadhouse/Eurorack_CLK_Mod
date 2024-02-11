@@ -41,7 +41,7 @@ chan_mods *get_chan_structure();
 void print_all_channels();
 
 void vc_delay(uint16_t time);
-uint8_t modifiy_port_data(uint8_t data, uint8_t chan, uint8_t mod, uint8_t count);
+uint8_t modifiy_port_data(uint8_t data, uint8_t chan, uint8_t mod, uint8_t count, int8_t phase);
 uint8_t clk_engine();
 char *num_to_binary_string(uint8_t num);
 

@@ -167,11 +167,11 @@ void set_chan_pw(int chan, int pw){
 
 
 
-uint8_t modifiy_port_data(uint8_t data, uint8_t chan, uint8_t mod, uint8_t count){
-    //divides the counter by the specified divisor and if the remainder is zero then applies an exclusive OR mask to flp the bit.
+uint8_t modifiy_port_data(uint8_t data, uint8_t chan, uint8_t mod, uint8_t count, int8_t phase){
+    //divides the counter by the specified divisor and if the remainder is zero checks to see if the current chan is a zero or one.  if a zero then adds a one to that chan
     //returns the byte after applying the appropriate masks
         uint8_t temp_data = 0;
-        if (count%(2*mod) == 0){
+        if ((count+phase) % (2*mod) == 0){
             
             temp_data = data & (1<<chan-1);
             if(temp_data == 0){
@@ -218,14 +218,14 @@ uint8_t clk_engine(){
     // }
 counter++;
     //Here is where we apply the mod to each channel
-    current_port_data = modifiy_port_data(current_port_data, 1, (get_chan_structure() -> chan1_mod), counter);
-    current_port_data = modifiy_port_data(current_port_data, 2, (get_chan_structure() -> chan2_mod), counter);
-    current_port_data = modifiy_port_data(current_port_data, 3, (get_chan_structure() -> chan3_mod), counter);
-    current_port_data = modifiy_port_data(current_port_data, 4, (get_chan_structure() -> chan4_mod), counter);
-    current_port_data = modifiy_port_data(current_port_data, 5, (get_chan_structure() -> chan5_mod), counter);
-    current_port_data = modifiy_port_data(current_port_data, 6, (get_chan_structure() -> chan6_mod), counter);
-    current_port_data = modifiy_port_data(current_port_data, 7, (get_chan_structure() -> chan7_mod), counter);
-    current_port_data = modifiy_port_data(current_port_data, 8, (get_chan_structure() -> chan8_mod), counter);
+    current_port_data = modifiy_port_data(current_port_data, 1, (get_chan_structure() -> chan1_mod), counter, 0);
+    current_port_data = modifiy_port_data(current_port_data, 2, (get_chan_structure() -> chan2_mod), counter, -1);
+    current_port_data = modifiy_port_data(current_port_data, 3, (get_chan_structure() -> chan3_mod), counter, 0);
+    current_port_data = modifiy_port_data(current_port_data, 4, (get_chan_structure() -> chan4_mod), counter, 0);
+    current_port_data = modifiy_port_data(current_port_data, 5, (get_chan_structure() -> chan5_mod), counter, 0);
+    current_port_data = modifiy_port_data(current_port_data, 6, (get_chan_structure() -> chan6_mod), counter, 0);
+    current_port_data = modifiy_port_data(current_port_data, 7, (get_chan_structure() -> chan7_mod), counter, 0);
+    current_port_data = modifiy_port_data(current_port_data, 8, (get_chan_structure() -> chan8_mod), counter, 0);
     
     return current_port_data; //use the bitwise not to invert the bits i instead you want to start with inverted starting state
 }
